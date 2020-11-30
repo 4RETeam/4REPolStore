@@ -3,6 +3,7 @@ const env = require('dotenv');
 const mongoose = require('mongoose');
 const app = express();
 const path = require('path');
+const cors = require('cors');
 
 //routes
 const authRoutes = require('./routes/auth');
@@ -28,6 +29,7 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO
     console.log('Database connected!!!');
 });
 //для чтения данных HTTP POST мы должны использовать модуль узла «express.json». express.json - это часть промежуточного программного обеспечения Express, которое читает входные данные формы и сохраняет их как объект javascript, доступный через req.body
+app.use(cors());
 app.use(express.json());
 app.use('/public', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', authRoutes);
